@@ -2,6 +2,9 @@ package com;
 
 import java.sql.Connection;
 
+
+
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,8 +22,8 @@ public Connection connect()
 	try
 	{
 		Class.forName("com.mysql.jdbc.Driver");
-		con= DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/test",
-		"root", "");
+		con= DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/items_store",
+		"root", "1999ppdd");
 		
 		//For testing
 		System.out.print("Successfully connected");
@@ -57,7 +60,7 @@ public String insertItem(String code, String name, String price, String desc)
     
     
     // create a prepared statement
-    String query = " insert into items (`itemID`,`itemCode`,`itemName`,`itemPrice`,`itemDesc`)"+ " values (?, ?, ?, ?, ?)"; 
+    String query = " insert into item(`itemID`,`itemCode`,`itemName`,`ItemPrice`,`itemDesc`)"+ " values(?, ?, ?, ?, ?)"; 
     PreparedStatement preparedStmt = con.prepareStatement(query); 
 	 // binding values
 	 preparedStmt.setInt(1, 0); 
@@ -101,7 +104,7 @@ public String readItems()
 	 // Prepare the html table to be displayed
 	 output = "<table border='1'><tr><th>Item Code</th>" +"<th>Item Name</th><th>Item Price</th>"
 	 + "<th>Item Description</th>" + "<th>Update</th><th>Remove</th></tr>"; 
-	 String query = "select * from items"; 
+	 String query = "select * from item"; 
 	 
 	 Statement stmt = (Statement) con.createStatement(); 
 	 ResultSet rs = ((java.sql.Statement) stmt).executeQuery(query); 
