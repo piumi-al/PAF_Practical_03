@@ -2,15 +2,15 @@ package com;
 
 import java.sql.Connection;
 
-
-
-
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Item {
+	
+	
 	
 	
 public Connection connect()
@@ -132,10 +132,10 @@ public String readItems()
 	 
 	 // buttons
 	 output += "<td><input name='btnUpdate' " 
-	 + " type='button' value='Update' onclick=\"UpdateItems()\"></td>"
+	 + " type='button' value='Update' onclick='UpdateItems()'></td>"
 	 + "<td><form method='post' action='items.jsp'>"
 	 + "<input name='btnRemove' " 
-	 + " type='submit' value='Remove' onclick=\"deleteItems()\">"
+	 + " type='submit' value='Remove' onclick='DeleteItems()'>"
 	 + "<input name='itemID' type='hidden' " 
 	 + " value='" + itemID + "'>" + "</form></td></tr>"; 
 	 } 
@@ -195,44 +195,43 @@ public String UpdateItems(String itemID,String code, String name, String price, 
 	
 }
 
+
+
+
+
+public void DeleteItems(int id) {
 	
-public  boolean deleteItems(String itemID) {
-	
-	int convertedID = Integer.parseInt(itemID);
-	
-	boolean isSuccess = false;
+		 String output = "";
+		 Connection connection = null;
+		 PreparedStatement preparedStatement = null;
+
 	try {
 		
-		 Connection con = connect();  
-		 
-		 Statement stmt = (Statement) con.createStatement(); 
-	
-		
-		String sql = "delete from item where itemID = '"+convertedID+"'";
-		int r = stmt.executeUpdate(sql);
-		
-		if(r>0) {
-			
-			isSuccess = true;
-		}
-		else {
-			
-			isSuccess = false;
-		}
+		Connection con = connect(); 
 		
 		
-	}catch(Exception e) {
+		preparedStatement = con.prepareStatement("DELETE FROM item WHERE itemID = ?");
+		preparedStatement.setInt(1, id);
+		preparedStatement.executeUpdate();
+		con.close(); 
+		output = "deleted successfully"; 
+		
+
+	} catch (Exception e) {
 		
 		e.printStackTrace();
-	}
 	
+		}
 	
-	return isSuccess;
 }
 
 
 
+	
 }
+
+
+
 
 
 	
