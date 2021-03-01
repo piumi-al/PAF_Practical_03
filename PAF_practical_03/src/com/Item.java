@@ -135,7 +135,7 @@ public String readItems()
 	 + " type='button' value='Update' onclick='UpdateItems()'></td>"
 	 + "<td><form method='post' action='items.jsp'>"
 	 + "<input name='btnRemove' " 
-	 + " type='submit' value='Remove' onclick='DeleteItems()'>"
+	 + " type='submit' value='Remove' onclick='deleteItem()'>"
 	 + "<input name='itemID' type='hidden' " 
 	 + " value='" + itemID + "'>" + "</form></td></tr>"; 
 	 } 
@@ -199,34 +199,34 @@ public String UpdateItems(String itemID,String code, String name, String price, 
 
 
 
-public void DeleteItems(int id) {
-	
-		 String output = "";
-		 Connection connection = null;
-		 PreparedStatement preparedStatement = null;
-
-	try {
-		
-		Connection con = connect(); 
-		
-		
-		preparedStatement = con.prepareStatement("DELETE FROM item WHERE itemID = ?");
-		preparedStatement.setInt(1, id);
-		preparedStatement.executeUpdate();
-		con.close(); 
-		output = "deleted successfully"; 
-		
-
-	} catch (Exception e) {
-		
-		e.printStackTrace();
-	
+public String deleteItem(String itemID)
+{
+		String output = "";
+		try
+		{
+			Connection con = connect();
+		if (con == null)
+		{
+			return "Error while connecting to the database for deleting.";
 		}
-	
+			// create a prepared statement
+			String query = "delete from item where itemID=?";
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			// binding values
+			preparedStmt.setInt(1, Integer.parseInt(itemID));
+			// execute the statement
+			preparedStmt.execute();
+			con.close();
+			
+			output = "Deleted successfully";
+		}
+		catch (Exception e)
+		{
+			output = "Error while deleting the item.";
+			System.err.println(e.getMessage());
+		}
+		return output;
 }
-
-
-
 	
 }
 
