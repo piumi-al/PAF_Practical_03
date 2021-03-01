@@ -11,6 +11,17 @@ if (request.getParameter("itemCode") != null)
  request.getParameter("itemDesc")); 
  session.setAttribute("statusMsg", stsMsg); 
  }
+
+
+//Delete item----------------------------------
+if (request.getParameter("itemID") != null)
+{
+Item itemObj = new Item();
+String stsMsg = itemObj.deleteItem(request.getParameter("itemID"));
+session.setAttribute("statusMsg", stsMsg);
+}
+
+
 %>
 <!DOCTYPE html>
 <html> <head> <meta charset="ISO-8859-1"> <title>Items Management</title>
