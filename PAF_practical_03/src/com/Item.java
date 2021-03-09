@@ -104,7 +104,7 @@ public String readItems()
 	 
 	 // Prepare the html table to be displayed
 	 output = "<table border='1'><tr><th>Item Code</th>" +"<th>Item Name</th><th>Item Price</th>"
-	 + "<th>Item Description</th>" + "<th>Update</th><th>Remove</th></tr>"; 
+	 + "<th>Item Description</th>" + "<th>Update</th><th >Remove</th></tr>"; 
 	 String query = "select * from item"; 
 	 
 	 Statement stmt = (Statement) con.createStatement(); 
@@ -133,10 +133,10 @@ public String readItems()
 	 
 	 // buttons
 	 output += "<td><input name='btnUpdate' " 
-	 + " type='button' value='Update' onclick='UpdateItems()'></td>"
+	 + " type='button' value='Update' onclick='UpdateItems()'class=\"btn btn-success\"></td>"
 	 + "<td><form method='post' action='items.jsp'>"
 	 + "<input name='btnRemove' " 
-	 + " type='submit' value='Remove' onclick='deleteItem()'>"
+	 + " type='submit' value='Remove' onclick='deleteItem()'class='btn btn-danger'>"
 	 + "<input name='itemID' type='hidden' " 
 	 + " value='" + itemID + "'>" + "</form></td></tr>"; 
 	 } 
